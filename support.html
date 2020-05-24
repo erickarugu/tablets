@@ -115,40 +115,38 @@
           <div class="col-sm-12 section-t8">
             <div class="row">
               <div class="col-md-7">
-                <form class="php-email-form">
+                <form class="php-email-form" id="form">
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <div class="form-group">
                         <input type="text" id="name" name="name" class="form-control form-control-lg form-control-a"
-                          placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                        <div class="validate"></div>
+                          placeholder="Your Name" data-rule="minlen:4">
+                        <small id="name-error" class="text-danger"></small>
                       </div>
                       <div class="form-group">
                         <input name="email" id="email" type="email" class="form-control form-control-lg form-control-a"
-                          placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-                        <div class="validate"></div>
+                          placeholder="Your Email" data-rule="email" required>
+                        <small id="email-error" class="text-danger"></small>
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
                       <div class="form-group">
                         <input type="text" id="subject" name="subject"
-                          class="form-control form-control-lg form-control-a" placeholder="Subject" data-rule="minlen:4"
-                          data-msg="Please enter at least 8 chars of subject">
-                        <div class="validate"></div>
+                          class="form-control form-control-lg form-control-a" placeholder="Subject" required">
+                        <small id="subject-error" class="text-danger"></small>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <textarea name="message" id="message" class="form-control" name="message" cols="45" rows="8"
-                          data-rule="required" data-msg="Please write something for us"
-                          placeholder="Message"></textarea>
-                        <div class="validate"></div>
+                          placeholder="Message" required></textarea>
+                        <small id="message-error" class="text-danger"></small>
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
                       <div class="mb-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message" id="error-message"></div>
+                        <div class="loading" id="loading">Loading..</div>
+                        <div class="text-danger" id="error-message"></div>
                         <div class="sent-message" id="success-message">Your message has been sent. Thank you!</div>
                       </div>
                     </div>
@@ -302,41 +300,85 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
-    function submitData() {
-      let name = document.getElementById("name").value;
-      let email = document.getElementById("email").value;
-      let subject = document.getElementById("subject").value;
-      let message = document.getElementById("message").value;
-
-      let url = 'https://sendmail.azuatech.co.ke/api/send';
-      let optionsAxios = {
-        headers: {
-          'X-Api-Key': '12333545805ebd7d4432e3f4.53800200'
-        }
+    const nameError = document.getElementById("name-error");
+    const emailError = document.getElementById("email-error");
+    const subjectError = document.getElementById("subject-error");
+    const messageError = document.getElementById("message-error");
+    const errorMsg = document.getElementById("error-message");
+    const successMsg = document.getElementById("success-message");
+    const form = document.getElementById("form");
+    const url = 'https://sendmail.azuatech.co.ke/api/send';
+    const optionsAxios = {
+      headers: {
+        'X-Api-Key': '12333545805ebd7d4432e3f4.53800200'
       }
-      axios.post(url, {
-        name: "TETL Website",
-        to: ["tetl.ltdke@gmail.com"],
-        from: `${email}`,
-        subject: `${subject}`,
-        body: `${message}`
-      }, optionsAxios)
-        .then(resp => {
-          if (resp.data.message) {
-            // sending email was success 
-            console.log(resp.data.message);
-
-          }
-          // if error in sending email
-          if (resp.data.error) {
-            console.log(resp.data.error)
-          }
-        })
-        .catch(err => {
-          alert(err)
-        })
-
     }
+
+    function submitData() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var subject = document.getElementById("subject").value;
+      var message = document.getElementById("message").value;
+      var loading = document.getElementById("loading");
+      loading.style.display = "block";
+      nameError.innerText = "";
+      emailError.innerText = "";
+      subjectError.innerText = "";
+      messageError.innerText = "";
+      successMsg.style.display = "none";
+      errorMsg.innerText = "";
+
+      if (!name || name.length < 2) {
+        nameError.innerText = `Please Enter a Name(More than two characters)`;
+        loading.style.display = "none";
+        return;
+      }
+      if (!email) {
+        emailError.innerText = `Please Enter a valid email`;
+        loading.style.display = "none";
+        return;
+      }
+      if (!subject) {
+        subjectError.innerText = `Please Enter Subject`;
+        loading.style.display = "none";
+        return;
+      }
+      if (!message) {
+        messageError.innerText = `Please enter content`;
+        loading.style.display = "none";
+        return;
+      }
+      else {
+        axios.post(url, {
+          name: "TETL Website",
+          to: ["tetl.ltdke@gmail.com"],
+          from: `${email}`,
+          subject: `${subject}`,
+          body: `${message}`
+        }, optionsAxios)
+          .then(resp => {
+            if (resp.data.message) {
+              // sending email was success 
+              loading.style.display = "none";
+              form.reset();
+              successMsg.style.display = "block";
+            }
+            // if error in sending email
+            if (resp.data.error) {
+              loading.style.display = "none";
+              form.reset();
+              errorMsg.innerText = `Error sending email. Please try again later`;
+            }
+          })
+          .catch(err => {
+            alert(err)
+          })
+      }
+    }
+
+    function sendEmail() { }
+
+
 
   </script>
 
