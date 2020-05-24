@@ -606,8 +606,7 @@ a:hover {
   background-color: #18d26e;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  color: #fff;
-  box-shadow: 1px 2px 15px rgba(100, 100, 100, 0.3);
+  box-shadow: 1px 2px 15px rgba(100, 100, 100, 0.5);
 }
 
 .navbar-default.navbar-reduce {
@@ -639,10 +638,14 @@ a:hover {
 .navbar-default.navbar-trans .nav-link, .navbar-default.navbar-reduce .nav-link {
   font-size: 1.1rem;
   letter-spacing: 0.030em;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
   position: relative;
   padding-left: 0;
   padding-right: 0;
+}
+.navbar-default.navbar-trans .nav-link{
+  color: #fff;
+
 }
 
 .navbar-default.navbar-trans .nav-link:before, .navbar-default.navbar-reduce .nav-link:before {
@@ -1254,7 +1257,7 @@ a:hover {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 27%, rgba(0, 0, 0, 0.65) 90%);
 }
 .services-hr{
-  border: 3px solid #18d26e;
+  border: 3px dashed #008c00;
   width: 40%; 
 }
 
@@ -1654,12 +1657,12 @@ a:hover {
 .card-box-c {
   position: relative;
   background: #fff;
-  transition: all 1s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 .card-box-c:hover{
   cursor: pointer;
-  /* transform: scale(1.05); */
-  transform: translateY(-2px);
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
 }
 
 @media (max-width: 767px) {
@@ -1832,8 +1835,12 @@ a:hover {
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
-.intro-single.bg-default{
-  background: #f3f3f3;
+.intro-single.intro-about{
+  background: url(./../img/slide-1.jpg);
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-size: cover;
 }
 .section-about .title-vertical {
   position: absolute;
