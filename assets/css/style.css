@@ -633,6 +633,9 @@ a:hover {
     background: #fff;
     padding: 2rem;
   }
+  .navbar-collapse .navbar-nav .nav-item .nav-link{
+    color: #008c00;
+  }
 }
 
 .navbar-default.navbar-trans .nav-link, .navbar-default.navbar-reduce .nav-link {
@@ -753,6 +756,9 @@ a:hover {
   transition: all 500ms ease;
   font-weight: 600;
   min-width: 220px;
+}
+.navbar-default .dropdown .dropdown-menu .dropdown-item  .nav-link{
+  color: #000;
 }
 
 .navbar-default .dropdown .dropdown-menu .dropdown-item:hover {
